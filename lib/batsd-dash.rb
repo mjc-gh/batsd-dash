@@ -4,7 +4,7 @@ require 'sinatra/synchrony'
 require 'sinatra/reloader' if ENV['RACK_ENV'] == 'development'
 
 require 'helpers/input_parser'
-#require 'helpers/graph'
+require 'helpers/graph'
 
 class BatsdDash < Sinatra::Base
   configure(:development) { register Sinatra::Reloader }
@@ -13,7 +13,7 @@ class BatsdDash < Sinatra::Base
     set :haml, :format => :html5
 
     helpers BatsdHelper::InputParser
-    #helpers BatsdHelper::Graph
+    helpers BatsdHelper::Graph
 
     register Sinatra::Synchrony
   end
@@ -27,7 +27,7 @@ class BatsdDash < Sinatra::Base
 
         EventMachine::Synchrony::ConnectionPool.new(size: pool_size) do
           Class.new(EventMachine::Synchrony::TCPSocket) do
-            define_method(:read) { |*args| Yajl::Parser.parse super(*args).chomp! }
+            define_method(:read_json) { |*args| Yajl::Parser.parse read }
 
           end.new(host, port)
         end
@@ -58,11 +58,16 @@ class BatsdDash < Sinatra::Base
       return render_error('invalid time range') unless range
       return render_error('invalid metrics') if metrics.empty?
 
-      results = metrics.map do |metric|
-        connection_pool.execute(true) do |conn|
-          conn.write("values #{datatype}:#{metric} #{range[0]} #{range[1]}")
+      results = { range: range, metrics: [] }
 
-          conn.read
+      metrics.each do |metric|
+        connection_pool.execute(true) do |conn|
+          conn.write "values #{datatype}:#{metric} #{range[0]} #{range[1]}"
+
+          json = conn.read_json
+          values = json["#{datatype}:#{metric}"]
+
+          results[:metrics] << { label: metric, data: collect_for_graph(values) }
         end
       end
 
