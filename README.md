@@ -14,5 +14,5 @@ Here is a sample rackup file (`config.ru`):
 
     require 'batsd-dash'
 
-    # setup redis and data path
+    # connection info for batsd data server 
     BatsdDash.set :batsd_server, 'localhost:8127'
