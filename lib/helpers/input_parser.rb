@@ -14,8 +14,8 @@ module BatsdHelper
       if start.nil? && stop.nil?
         now = Time.now.to_i
 
-        # 1 hr range
-        [ now - 360, now ] 
+        # 2 hr range
+        [ now - 7200, now ] 
 
       else
         [start.to_i, stop.to_i].tap do |range|
