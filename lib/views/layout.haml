@@ -1,0 +1,24 @@
+!!!
+%html
+  %head
+    %title Batsd Dash
+
+    %meta{"http-equiv" => "Content-Type", :content => "text/html; charset=utf-8"}
+    %meta{:name => :author, :content => 'http://breakbase.com'}
+
+    %link{:rel => 'stylesheet', :href => '/css/public.css', :type => 'text/css'}
+
+    %script{:src => 'http://code.jquery.com/jquery-1.7.2.min.js'}
+    %script
+      if (typeof jQuery == 'undefined') document.write(unescape("%3Cscript src='/js/jquery-min.js'%3E%3C/script%3E"));
+
+    %script{:src => '/js/flot-min.js'}
+    %script{:src => '/js/graph.js'}
+  %body
+    #header
+      .wrap
+        %h1
+          %a{:href => '/'} Batsd Dash
+
+    #content
+      = yield

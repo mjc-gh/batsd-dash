@@ -1,0 +1,49 @@
+@import "compass/utilities/general/clearfix";
+@import "compass/css3";
+@import "compass/reset";
+
+html, body { height:100%; min-height:100%; background-color:#222; }
+h1, h2 { color:#0F0; font-family:"Courier New",Courier,monospace; }
+a { text-decoration:none; color:inherit; }
+
+.wrap { width:1000px; margin:0 auto; }
+
+#header {
+    height:60px; border:1px solid #0F0; border-width:0 0 1px 0; margin:0 0 20px;
+
+    background-color: #000000;
+    @include filter-gradient(#000000, #222, vertical);
+    @include background-image(linear-gradient(top, #000000 0%,#222 100%));
+
+    @include pie-clearfix;
+
+    h1 { float:left; font-size:28px; padding:15px 0 0; }
+    ul {
+        float:right; width:300px; margin:15px 0;
+
+        li {
+            float:left; margin:0 20px;
+            a { cursor:pointer; }
+        }
+    }
+}
+
+
+#content {
+    color:#FFF; width:1000px; margin:0 auto; font-size:18px;
+
+    h1 { font-size:26px; margin:30px 0; }
+    h2 { font-size:24px; margin:20px 0; }
+
+    p {
+        em { font-style:italic; margin:0 -4px 0 0; }
+    }
+
+    .graph {
+        width:900px; height:400px; margin:0 auto;
+
+        h2 { text-align:center; margin:180px; }
+    }
+}
+
+

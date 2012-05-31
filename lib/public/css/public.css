@@ -1,0 +1,168 @@
+/* line 17, ../../../../../.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* line 20, ../../../../../.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+body {
+  line-height: 1;
+}
+
+/* line 22, ../../../../../.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 24, ../../../../../.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 26, ../../../../../.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 28, ../../../../../.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 101, ../../../../../.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 30, ../../../../../.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 114, ../../../../../.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 5, ../../sass/public.scss */
+html, body {
+  height: 100%;
+  min-height: 100%;
+  background-color: #222;
+}
+
+/* line 6, ../../sass/public.scss */
+h1, h2 {
+  color: #0F0;
+  font-family: "Courier New",Courier,monospace;
+}
+
+/* line 7, ../../sass/public.scss */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* line 9, ../../sass/public.scss */
+.wrap {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+/* line 11, ../../sass/public.scss */
+#header {
+  height: 60px;
+  border: 1px solid #0F0;
+  border-width: 0 0 1px 0;
+  margin: 0 0 20px;
+  background-color: #000000;
+  *zoom: 1;
+  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF000000', endColorstr='#FF222222');
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #000000), color-stop(100%, #222222));
+  background-image: -webkit-linear-gradient(top, #000000 0%, #222222 100%);
+  background-image: -moz-linear-gradient(top, #000000 0%, #222222 100%);
+  background-image: -o-linear-gradient(top, #000000 0%, #222222 100%);
+  background-image: -ms-linear-gradient(top, #000000 0%, #222222 100%);
+  background-image: linear-gradient(top, #000000 0%, #222222 100%);
+  *zoom: 1;
+}
+/* line 38, ../../../../../.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+#header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* line 20, ../../sass/public.scss */
+#header h1 {
+  float: left;
+  font-size: 28px;
+  padding: 15px 0 0;
+}
+/* line 21, ../../sass/public.scss */
+#header ul {
+  float: right;
+  width: 300px;
+  margin: 15px 0;
+}
+/* line 24, ../../sass/public.scss */
+#header ul li {
+  float: left;
+  margin: 0 20px;
+}
+/* line 26, ../../sass/public.scss */
+#header ul li a {
+  cursor: pointer;
+}
+
+/* line 32, ../../sass/public.scss */
+#content {
+  color: #FFF;
+  width: 1000px;
+  margin: 0 auto;
+  font-size: 18px;
+}
+/* line 35, ../../sass/public.scss */
+#content h1 {
+  font-size: 26px;
+  margin: 30px 0;
+}
+/* line 36, ../../sass/public.scss */
+#content h2 {
+  font-size: 24px;
+  margin: 20px 0;
+}
+/* line 39, ../../sass/public.scss */
+#content p em {
+  font-style: italic;
+  margin: 0 -4px 0 0;
+}
+/* line 42, ../../sass/public.scss */
+#content .graph {
+  width: 900px;
+  height: 400px;
+  margin: 0 auto;
+}
+/* line 45, ../../sass/public.scss */
+#content .graph h2 {
+  text-align: center;
+  margin: 180px;
+}
