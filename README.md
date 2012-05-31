@@ -1,7 +1,7 @@
 batsd-dash
 ==================
 
-Configurable dashboard for [batsd-server](https://github.com/noahhl/batds). 
+Configurable dashboard for [batsd-server](https://github.com/noahhl/batsd). 
 
 
 ### Install
