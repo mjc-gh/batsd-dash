@@ -82,7 +82,7 @@ class BatsdDash < Sinatra::Base
           values = json["#{datatype}:#{metric}"]
 
           # interval is same for all
-          collect_opts.merge!(interval: json['interval']) unless collect_opts.has_key?(:interval)
+          collect_opts.merge!(interval: json['interval'] || 0) unless collect_opts.has_key?(:interval)
           # process results for graphing and add to results
           results[:metrics] << { label: metric, data: collect_for_graph(values, collect_opts) }
         end
