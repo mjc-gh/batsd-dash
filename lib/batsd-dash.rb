@@ -16,6 +16,8 @@ class BatsdDash < Sinatra::Base
     helpers BatsdHelper::Graph
 
     register Sinatra::Synchrony
+
+    puts settings.inspect
   end
 
   helpers do
@@ -38,10 +40,21 @@ class BatsdDash < Sinatra::Base
       status 400
       respond_with error: msg
     end
+
+    def render_json(json)
+      String === json ? json : Yajl::Encoder.encode(json)
+    end
   end
 
   get "/" do
     haml :root
+  end
+
+  get "/available", :provides => :json do
+    connection_pool.execute(true) do |conn|
+      conn.write "available"
+      render_json conn.read_json
+    end
   end
 
   %w[ counters timers gauges ].each do |datatype|
@@ -58,7 +71,8 @@ class BatsdDash < Sinatra::Base
       return render_error('invalid time range') unless range
       return render_error('invalid metrics') if metrics.empty?
 
-      results = { range: range, metrics: [] }
+      results = { range: range.dup.map! { |n| n * 1000 }, metrics: [] }
+      collect_opts = { zero_fill: !params[:no_zero_fill], range: results[:range] }
 
       metrics.each do |metric|
         connection_pool.execute(true) do |conn|
@@ -67,11 +81,14 @@ class BatsdDash < Sinatra::Base
           json = conn.read_json
           values = json["#{datatype}:#{metric}"]
 
-          results[:metrics] << { label: metric, data: collect_for_graph(values) }
+          # interval is same for all
+          collect_opts.merge!(interval: json['interval']) unless collect_opts.has_key?(:interval)
+          # process results for graphing and add to results
+          results[:metrics] << { label: metric, data: collect_for_graph(values, collect_opts) }
         end
       end
 
-      Yajl::Encoder.encode results
+      render_json results
     end
   end
 end
