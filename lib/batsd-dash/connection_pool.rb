@@ -1,43 +1,56 @@
 module BatsdDash
-  module ConnectionPool
-    module Helpers
-      def connection_pool
-        self.class.connection_pool or render_error('Unable to connect to Batsd Server')
-      end
+  module ConnectionHelpers
+    def connection_pool
+      ConnectionPool.pool or render_error('Unable to connect to Batsd Server')
     end
+  end
 
-    def self.registered(app)
-      app.helpers ConnectionPool::Helpers
-    end
+  class ConnectionPool
+    class << self
+      attr_accessor :settings
+      attr_reader :pool
 
-    attr_reader :connection_pool
+      def initialize_connection_pool
+        # default settings (which are defaults from batsd itself)
+        @settings ||= { host: 'localhost', port: 8127, pool_size: 4 }
 
-    def connection_settings(host, port, size = 4)
-      @connection_settings = { host: host, port: port, pool_size: size }
-    end
-
-    def initialize_connection_pool
-      # default settings (which are defaults from batsd itself)
-      @connection_settings ||= { host: 'localhost', port: 8127, pool_size: 4}
-
-      begin
-        @connection_pool ||= EventMachine::Synchrony::ConnectionPool.new(size: @connection_settings[:pool_size]) do
-          Client.new(@connection_settings[:host], @connection_settings[:port])
+        if @reconnect_timer
+          @reconnect_timer.cancel
+          @reconnect_timer = nil
         end
-      rescue SocketError => e
-        # failed to connect -- setup reconnect timer
 
+        begin
+          @pool ||= EventMachine::Synchrony::ConnectionPool.new(size: settings[:pool_size]) do
+            Client.new(settings[:host], settings[:port])
+          end
+        rescue SocketError => e
+          # TODO maybe warn here or something?
+          puts ENV['RACK_ENV']
+
+        end
       end
-    end
 
-    def close_connection_pool
-      @connection_pool.close if @connection_pool
-      @connection_pool = nil
+      def close_connection_pool
+        @pool.close if @pool
+        @pool = nil
+      end
+
+      def start_reconnect_timer
+        unless @reconnect_timer
+          @reconnect_timer = EventMachine::Synchrony.add_timer(3) { initialize_connection_pool }
+        end
+      end
     end
 
     class Client < EventMachine::Synchrony::TCPSocket
       def read_json
         Yajl::Parser.parse read
+      end
+
+      def unbind
+        super
+
+        ConnectionPool::start_reconnect_timer
       end
     end
   end

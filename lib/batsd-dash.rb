@@ -10,14 +10,14 @@ module BatsdDash
     #configure(:development) { register Sinatra::Reloader }
 
     configure do
-      register Sinatra::Synchrony, ConnectionPool
-      helpers ParamsHelper, GraphHelper
+      register Sinatra::Synchrony
+      helpers ParamsHelper, GraphHelper, ConnectionHelpers
 
       set :haml, :format => :html5
 
       # once sinatra-synchrony accepts my pull-req to bump em-synchrony versions we
       # can use EM::Synchrony.next_tick instead of this (we also can drop the execute blocks below)
-      EventMachine.next_tick { Fiber.new { initialize_connection_pool }.resume }
+      EventMachine.next_tick { Fiber.new { ConnectionPool::initialize_connection_pool }.resume }
     end
 
     helpers do
