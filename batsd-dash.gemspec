@@ -1,12 +1,16 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
+require 'batsd-dash/version'
 
 Gem::Specification.new do |s|
   s.name        = "batsd-dash"
-  s.version     = "0.0.1"
-  s.authors     = ["mikeycgto"]
-  s.email       = ["mikeycgto@gmail.com"]
-  s.homepage    = ""
+  s.version     = BatsdDash::VERSION
+
+  s.authors     = ["mikeycgto", "btoconnor"]
+  s.email       = ["mikeycgto@gmail.com", "gatzby3jr@gmail.com"]
+
+  s.homepage    = "https://github.com/mikeycgto/batsd-dash"
+
   s.summary     = %q{batsd-dash}
   s.description = %q{batsd-dash - graphs and stuff from batds. yay.}
 
@@ -25,8 +29,10 @@ Gem::Specification.new do |s|
   s.add_dependency "haml"
   s.add_dependency "yajl-ruby"
 
-  s.add_development_dependency "ruby-debug19"
-  s.add_development_dependency "thin"
-	s.add_development_dependency "minitest"
+  s.add_development_dependency "rake"
+  s.add_development_dependency "minitest"
+  s.add_development_dependency "mocha"
   s.add_development_dependency "turn"
+
+  s.add_development_dependency "thin"
 end
