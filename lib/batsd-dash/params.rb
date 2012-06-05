@@ -1,6 +1,6 @@
-# helpers for parsing and validating input
-module BatsdHelper
-  module InputParser
+# helpers for processing params and validating input
+module BatsdDash
+  module ParamsHelper
     def parse_metrics
       metrics = params[:metrics]
       metrics = [metrics] unless Array === metrics
@@ -15,6 +15,7 @@ module BatsdHelper
         now = Time.now.to_i
 
         # 1 hr range
+        # TODO make this setting?
         [ now - 3600 + 1, now ]
 
       else

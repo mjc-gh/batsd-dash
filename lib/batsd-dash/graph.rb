@@ -1,6 +1,6 @@
 # helpers for parsing and validating input
-module BatsdHelper
-  module Graph
+module BatsdDash
+  module GraphHelper
     ##
     # This method works directly against values
     def collect_for_graph(values, opts = {})
