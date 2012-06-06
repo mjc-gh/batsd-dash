@@ -2,11 +2,12 @@ require 'helper'
 
 describe BatsdDash::App do
   before do
+    json = { 'interval' => 10, 'counters:a.b' => [] }
+
     BatsdDash::ConnectionPool::Client.any_instance.stubs(:sync).returns(true)
-    BatsdDash::ConnectionPool::Client.any_instance.stubs(:write).returns(true)
     BatsdDash::ConnectionPool::Client.any_instance.stubs(:unbind).returns(true)
 
-    stub_batsd_client_with 'interval' => 10, 'counters:a.b' => []
+    EM::Synchrony::ConnectionPool.any_instance.stubs(:async_values).yields(json)
   end
 
   describe 'params helper' do

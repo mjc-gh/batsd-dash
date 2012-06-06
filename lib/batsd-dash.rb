@@ -16,7 +16,7 @@ module BatsdDash
       set :haml, :format => :html5
 
       # once sinatra-synchrony accepts my pull-req to bump em-synchrony versions we
-      # can use EM::Synchrony.next_tick instead of this (we also can drop the execute blocks below)
+      # can use EM::Synchrony.next_tick instead of this
       EventMachine.next_tick { Fiber.new { ConnectionPool::initialize_connection_pool }.resume }
     end
 
@@ -39,9 +39,8 @@ module BatsdDash
     end
 
     get "/available", :provides => :json do
-      connection_pool.execute(true) do |conn|
-        conn.write "available"
-        render_json conn.read_json
+      connection_pool.async_available_list.callback do |json|
+        render_json json
       end
     end
 
@@ -63,11 +62,9 @@ module BatsdDash
         collect_opts = { zero_fill: !params[:no_zero_fill], range: results[:range] }
 
         metrics.each do |metric|
-          connection_pool.execute(true) do |conn|
-            statistic = "#{datatype}:#{metric}"
-            conn.write "values #{statistic} #{range[0]} #{range[1]}"
+          statistic = "#{datatype}:#{metric}"
 
-            json = conn.read_json
+          connection_pool.async_values(statistic, range) do |json|
             values = json[statistic]
 
             # interval is same for all

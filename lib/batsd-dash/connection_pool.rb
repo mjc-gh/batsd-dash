@@ -15,7 +15,8 @@ module BatsdDash
         @settings ||= { host: 'localhost', port: 8127, pool_size: 4 }
 
         if @reconnect_timer
-          @reconnect_timer.cancel
+          # TODO can drop condition once sinatra-synchrony is updated
+          @reconnect_timer.cancel if @reconnect_timer.respond_to?(:cancel)
           @reconnect_timer = nil
         end
 
@@ -23,9 +24,9 @@ module BatsdDash
           @pool ||= EventMachine::Synchrony::ConnectionPool.new(size: settings[:pool_size]) do
             Client.new(settings[:host], settings[:port])
           end
+
         rescue SocketError => e
           # TODO maybe warn here or something?
-          puts ENV['RACK_ENV']
 
         end
       end
@@ -37,14 +38,32 @@ module BatsdDash
 
       def start_reconnect_timer
         unless @reconnect_timer
-          @reconnect_timer = EventMachine::Synchrony.add_timer(3) { initialize_connection_pool }
+          # try to reconnect every 30 seconds
+          @reconnect_timer = EventMachine::Synchrony.add_timer(30) { initialize_connection_pool }
         end
       end
     end
 
     class Client < EventMachine::Synchrony::TCPSocket
-      def read_json
-        Yajl::Parser.parse read
+      # temp fix till em-synchrony gets updated in sinatra gem
+      alias :send :__send__
+
+      def write_and_read_json(data)
+        EventMachine::DefaultDeferrable.new.tap do |df|
+          parser = Yajl::Parser.new
+          parser.on_parse_complete = Proc.new { |json| df.succeed(json) }
+
+          write data
+          parser.parse read
+        end
+      end
+
+      def async_available_list
+        write_and_read_json "available"
+      end
+
+      def async_values(statistic, range)
+        write_and_read_json "values #{statistic} #{range[0]} #{range[1]}"
       end
 
       def unbind

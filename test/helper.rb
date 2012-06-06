@@ -28,10 +28,6 @@ class MiniTest::Spec
     BatsdDash::App
   end
 
-  def stub_batsd_client_with(databits)
-    BatsdDash::ConnectionPool::Client.any_instance.stubs(:read_json).returns(databits)
-  end
-
   def json_response
     oid = last_response.object_id
 
