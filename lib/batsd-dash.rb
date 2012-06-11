@@ -64,7 +64,7 @@ module BatsdDash
         metrics.each do |metric|
           statistic = "#{datatype}:#{metric}"
 
-          connection_pool.async_values(statistic, range) do |json|
+          connection_pool.async_values(statistic, range).callback do |json|
             values = json[statistic]
 
             # interval is same for all
