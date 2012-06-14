@@ -74,6 +74,7 @@ module BatsdDash
           end
         end
 
+        cache_control :no_cache, :no_store
         render_json results
       end
     end
