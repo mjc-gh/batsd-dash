@@ -44,6 +44,13 @@ a { text-decoration:none; color:inherit; }
 
         h2 { text-align:center; margin:180px; }
     }
+
+    .inputs {
+        width:900px; margin:0 auto 30px; text-align:center;
+
+        label { font-weight:bold; }
+        input { width:200px; }
+    }
 }
 
 

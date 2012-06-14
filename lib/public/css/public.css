@@ -36,3 +36,6 @@ a { text-decoration: none; color: inherit; }
 #content p em { font-style: italic; margin: 0 -4px 0 0; }
 #content .graph { width: 900px; height: 400px; margin: 0 auto; }
 #content .graph h2 { text-align: center; margin: 180px; }
+#content .inputs { width: 900px; margin: 0 auto 30px; text-align: center; }
+#content .inputs label { font-weight: bold; }
+#content .inputs input { width: 200px; }
