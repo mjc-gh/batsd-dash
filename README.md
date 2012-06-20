@@ -17,8 +17,7 @@ Here is a sample rackup file (`config.ru`):
     
     require 'batsd-dash'
 
-    # set batsd server setting BatsdDash::ConnectionPool.settings = { host:
-'localhost', port: 8127, pool_size: 4}
+    # set batsd server setting BatsdDash::ConnectionPool.settings = { host:'localhost', port: 8127, pool_size: 4 }
 
     # run the app run BatsdDash::App
 
