@@ -52,11 +52,11 @@ set to `application/json`!
 
 Graphs are rendered using Flot, a JavaScript library which uses the canvas
 element to create graphs. Since rendering is all done on the client, we make use
-of hash based navigation in order to reduce the amount of requests and to have
-still maintain 'linkability'.
+of hash based navigation in order to reduce the amount of requests and while
+maintaining 'linkability'.
 
 For example, to view a graph for the `a.b` metric, you would make the following
-request from within your browser:
+request from your browser:
 
     /counters#metrics=a.b
 
@@ -65,21 +65,22 @@ different start and stop time ranges easier. Graphs are updated when you press
 the 'View' button.
 
 Much like the data API, it's possible to view more than one metric at the same
-time. To do this, visit the following route from within your browser:
+time. To do this, visit the following route from your browser:
 
     /counters#metrics=a.b,c.d
 
-TODO when no data or only a single point is available, the graph is a bit
-strange looking. This is something on we will improve upon. Additionally, we 
-also plan to add some sort of tree-based widget for selecting different metrics 
-to view. 
+_TODO_ when no data or only a single point is available, the graph is a little
+strange looking. This is something we will improve upon. Additionally, we also
+plan to add some sort of tree-based widget for selecting different metrics to
+view. 
 
 Feel free to submit pull requests with these features!
 
 ### Zerofill
 
-TODO add details about zerofill. Setup client to accept pass along no-zerofill
-options.
+_TODO_ add details about zerofill. 
+
+_TODO_ Setup client to accept pass along no-zerofill options.
 
 ## Development
 
