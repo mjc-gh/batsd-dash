@@ -30,7 +30,7 @@ using `Rack::Auth::Basic` or `Rack::Auth::Digest::MD5`.
 
 The application provides a simple JSON-based API for accessing data from the
 batds data server. There are 3 main routes provide, one for each datatype. These
-routes are `/counters`, `/timers` and `/gauge`. For example, the following
+routes are `/counters`, `/timers` and `/gauges`. For example, the following
 request would access data for counter based metric:
 
     /counters?metric=a.b
