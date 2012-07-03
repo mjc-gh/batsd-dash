@@ -1,7 +1,7 @@
 module BatsdDash
   module ConnectionHelpers
     def connection_pool
-      ConnectionPool.pool or render_error('Unable to connect to Batsd Server')
+      ConnectionPool.pool or render_error('Connect pool failed to connect to Batsd')
     end
   end
 
@@ -15,18 +15,17 @@ module BatsdDash
         @settings ||= { host: 'localhost', port: 8127, pool_size: 4 }
 
         if @reconnect_timer
-          # TODO can drop condition once sinatra-synchrony is updated
-          @reconnect_timer.cancel if @reconnect_timer.respond_to?(:cancel)
+          @reconnect_timer.cancel
           @reconnect_timer = nil
         end
 
         begin
-          @pool ||= EventMachine::Synchrony::ConnectionPool.new(size: settings[:pool_size]) do
+          @pool = EventMachine::Synchrony::ConnectionPool.new(size: settings[:pool_size]) do
             Client.new(settings[:host], settings[:port])
           end
 
-        rescue SocketError => e
-          # TODO maybe warn here or something?
+        rescue Exception => e
+          warn "Connection Pool Error: #{e.message}"
 
         end
       end
@@ -45,16 +44,28 @@ module BatsdDash
     end
 
     class Client < EventMachine::Synchrony::TCPSocket
-      # temp fix till em-synchrony gets updated in sinatra gem
-      alias :send :__send__
-
-      def write_and_read_json(data)
+      def write_and_read_json(request)
         EventMachine::DefaultDeferrable.new.tap do |df|
+          response = String.new
           parser = Yajl::Parser.new
           parser.on_parse_complete = Proc.new { |json| df.succeed(json) }
 
-          write data
-          parser.parse read
+          begin
+            write request
+
+            # keep reading till we hit new line
+            while response[-1] != "\n"
+              response << read(1)
+            end
+
+            parser.parse response
+
+          rescue Exception => e
+            # TODO handle broken pipe
+            #unbind if Errno::EPIPE === e
+
+            df.fail(e)
+          end
         end
       end
 
@@ -66,8 +77,8 @@ module BatsdDash
         write_and_read_json "values #{statistic} #{range[0]} #{range[1]}"
       end
 
-      def unbind
-        super
+      def unbind(reason = nil)
+        super(reason)
 
         ConnectionPool::start_reconnect_timer
       end

@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   # specify any dependencies here; for example:
   s.add_dependency "sinatra"
   s.add_dependency "sinatra-contrib"
-  s.add_dependency "sinatra-synchrony"
+  s.add_dependency "sinatra-synchrony", "~> 0.3.2"
 
   s.add_dependency "haml"
   s.add_dependency "yajl-ruby"

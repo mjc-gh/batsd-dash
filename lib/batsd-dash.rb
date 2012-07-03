@@ -15,9 +15,7 @@ module BatsdDash
 
       set :haml, :format => :html5
 
-      # once sinatra-synchrony accepts my pull-req to bump em-synchrony versions we
-      # can use EM::Synchrony.next_tick instead of this
-      EventMachine.next_tick { Fiber.new { ConnectionPool::initialize_connection_pool }.resume }
+      EM::Synchrony.next_tick { ConnectionPool::initialize_connection_pool }
     end
 
     helpers do
@@ -63,11 +61,13 @@ module BatsdDash
 
         metrics.each do |metric|
           statistic = "#{datatype}:#{metric}"
+          deferrable = connection_pool.async_values(statistic, range)
 
-          connection_pool.async_values(statistic, range).callback do |json|
+          deferrable.errback { |e| return render_error(e.message) }
+          deferrable.callback do |json|
             values = json[statistic]
 
-            # interval is same for all
+            # merge in interval if its not already; interval is always same
             collect_opts.merge!(interval: json['interval'] || 0) unless collect_opts.has_key?(:interval)
             # process values for graphing and add to results
             results[:metrics] << { label: metric, data: collect_for_graph(values, collect_opts) }

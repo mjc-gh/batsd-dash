@@ -28,7 +28,10 @@ module BatsdDash
         index = 0
 
         while obj = data[index += 1]
-          if obj.first == time
+          current = obj.first
+
+          next if current <= time
+          if current == time
             time += step
             next
           end
