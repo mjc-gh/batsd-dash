@@ -61,7 +61,7 @@ module BatsdDash
 				zero_fill: !params[:no_zero_fill]
 			}
 
-			statistics.each do |datatype, metrics|
+      statistics.each do |datatype, metrics|
         metrics.each do |metric|
           statistic = "#{datatype}:#{metric}"
           deferrable = connection_pool.async_values(statistic, range)
@@ -71,7 +71,7 @@ module BatsdDash
             options[:interval] ||= json['interval']
 
             points = json[statistic] || []
-						values = values_for_graph(points, options)
+            values = values_for_graph(points, options)
 
             results << { key: metric, type: datatype[0..-2], values: values }
           end

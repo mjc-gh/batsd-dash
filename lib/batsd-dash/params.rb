@@ -22,7 +22,7 @@ module BatsdDash
 
         # 1 hr range
         # TODO make this setting?
-        [ now - 3600 + 1, now ]
+        [ now - 1800, now ]
 
       else
         [start.to_i, stop.to_i].tap do |range|
