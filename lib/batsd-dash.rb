@@ -42,41 +42,44 @@ module BatsdDash
       end
     end
 
-    %w[ counters timers gauges ].each do |datatype|
-      # this route renders the template (with codes for the graph)
-      get "/#{datatype}", :provides => :html do
-        haml :view
-      end
+    # this route renders the template (with codes for the graph)
+    get "/graph", :provides => :html do
+      haml :view
+    end
 
-      # actual data API route
-      get "/#{datatype}", :provides => :json do
-        metrics = parse_metrics
-        range = parse_time_range
+    # actual data API route
+    get "/data", :provides => :json do
+      statistics = parse_statistics
+      range = parse_time_range
 
-        return render_error('Invalid time range') unless range
-        return render_error('Invalid metrics') if metrics.empty?
+      return render_error('Invalid time range') unless range
+      return render_error('Invalid metrics') if statistics.empty?
 
-        results = { range: range.dup.map! { |n| n * 1000 }, metrics: [] }
-        collect_opts = { zero_fill: !params[:no_zero_fill], range: results[:range] }
+			results = []
+			options = {
+				range: range.dup.map { |n| n * 1000 },
+				zero_fill: !params[:no_zero_fill]
+			}
 
+			statistics.each do |datatype, metrics|
         metrics.each do |metric|
           statistic = "#{datatype}:#{metric}"
           deferrable = connection_pool.async_values(statistic, range)
 
           deferrable.errback { |e| return render_error(e.message) }
           deferrable.callback do |json|
-            values = json[statistic]
+            options[:interval] ||= json['interval']
 
-            # merge in interval if its not already; interval is always same
-            collect_opts.merge!(interval: json['interval'] || 0) unless collect_opts.has_key?(:interval)
-            # process values for graphing and add to results
-            results[:metrics] << { label: metric, data: collect_for_graph(values, collect_opts) }
+            points = json[statistic] || []
+						values = values_for_graph(points, options)
+
+            results << { key: metric, type: datatype[0..-2], values: values }
           end
         end
-
-        cache_control :no_cache, :no_store
-        render_json results
       end
+
+      cache_control :no_cache, :no_store
+      render_json range: options[:range], interval: options[:interval], results: results
     end
   end
 end

@@ -1,11 +1,17 @@
 # helpers for processing params and validating input
 module BatsdDash
   module ParamsHelper
-    def parse_metrics
-      metrics = params[:metrics]
-      metrics = [metrics] unless Array === metrics
+    def parse_statistics
+      Hash.new { |hash,key| hash[key] = [] }.tap do |stats|
+        %w[ counters gauges timers ].each do |datatype|
+          list = params[datatype]
 
-      metrics.tap { |list| list.reject! { |m| m.nil? || m.empty? } }
+          list = [list] unless Array === list
+          list.reject! { |m| m.nil? || m.empty? }
+
+					stats[datatype] = list unless list.empty?
+        end
+      end
     end
 
     def parse_time_range
