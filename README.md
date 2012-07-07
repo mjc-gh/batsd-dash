@@ -83,3 +83,7 @@ files, ensure you recompile the CSS. This is done by running:
 
 Additionally, it is highly recommended you use thin for development since this
 app uses EventMachine.
+
+## About
+
+This is project is maintained and developed by the people behind [BreakBase](http://breakbase.com) ([@mikeycgto](https://twitter.com/mikeycgto) and [@btoconnor](https://twitter.com/btoconnor))
