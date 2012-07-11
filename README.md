@@ -17,9 +17,11 @@ Here is a sample rackup file (`config.ru`):
     
     require 'batsd-dash'
 
-    # set batsd server setting BatsdDash::ConnectionPool.settings = { host:'localhost', port: 8127, pool_size: 8 }
+    # set batsd server setting 
+    BatsdDash::ConnectionPool.settings = { host:'localhost', port: 8127, pool_size: 8 }
 
-    # run the app run BatsdDash::App
+    # run the app 
+    run BatsdDash::App
 
 Rack is very powerful. You can password protect your batsd-dash instance 
 by using `Rack::Auth::Basic` or `Rack::Auth::Digest::MD5`.
