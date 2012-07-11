@@ -26,7 +26,7 @@ by using `Rack::Auth::Basic` or `Rack::Auth::Digest::MD5`.
 
 ## Viewing Graphs
 
-Graphs are rendered using (nv.d3)[http://nvd3.com/], a powerful graph
+Graphs are rendered using [nv.d3](http://nvd3.com/), a powerful graph
 and visualization library.
 
 Since rendering is all done on the client, we make use of hash based
