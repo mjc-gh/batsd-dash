@@ -32,17 +32,17 @@ Graphs are rendered using [nv.d3](http://nvd3.com/), a powerful graph
 and visualization library.
 
 Since rendering is all done on the client, we make use of hash based
-navigation in order to reduce the amount of requests and while 
+navigation in order to reduce the amount of requests while still
 maintaining 'linkability'.
 
-For example, to view a graph for the counter `a.b` metric, you would make 
-the following request from your browser:
+For example, to view a graph for the counter `a.b` statistic, you would need
+to make the following request from your browser:
 
     /graph#counters=a.b
 
 The graph view will provide you with a date time picker to make selecting
-different start and stop time ranges easier. Graphs are updated when you 
-press the 'View' button.
+different time ranges easier. Graphs are updated when you press the 
+'View' button or when the URL is updated.
 
 It's possible to view more than one metric at the same time. To do this, 
 visit the following route from your browser:
@@ -59,13 +59,13 @@ Soon, we will add support for multiple axis when viewing mixed types.
 ## Data API
 
 The application provides a simple JSON-based API for accessing data from
-the batds data server. The data API accepts similar parameters and the
-graph view but uses traditional query strings: 
+the batds data server. The data API accepts similar parameters as the
+graph view but uses traditional query strings instead: 
 
     /data?counters[]=a.b&counters[]=c.d&timers[]=x.y
 
 The data API also accepts a `start` and `stop` unix timestamp parameter 
-foraccessing different ranges of data. Note that, the data API will
+for accessing different ranges of data. Note that, the data API will
 only respond with JSON if the `Accept` header to set to `application/json`!
 
 ## Graph and Render Options
