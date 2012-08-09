@@ -1,41 +1,106 @@
+/* line 17, ../../../../../.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
 
+/* line 20, ../../../../../.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 body { line-height: 1; }
 
+/* line 22, ../../../../../.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 ol, ul { list-style: none; }
 
+/* line 24, ../../../../../.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 table { border-collapse: collapse; border-spacing: 0; }
 
+/* line 26, ../../../../../.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 caption, th, td { text-align: left; font-weight: normal; vertical-align: middle; }
 
+/* line 28, ../../../../../.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q, blockquote { quotes: none; }
+/* line 101, ../../../../../.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after { content: ""; content: none; }
 
+/* line 30, ../../../../../.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 a img { border: none; }
 
+/* line 114, ../../../../../.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary { display: block; }
 
+/* line 20, ../../batsd-dash/sass/public.scss */
 html, body { height: 100%; min-height: 100%; background-color: #222; }
 
-h1, h2 { color: #0F0; font-family: "Courier New",Courier,monospace; }
+/* line 22, ../../batsd-dash/sass/public.scss */
+h1, h2, strong, em { color: lime; font-family: "Courier New",Courier,monospace; }
 
+/* line 23, ../../batsd-dash/sass/public.scss */
 a { text-decoration: none; color: inherit; }
 
+/* line 25, ../../batsd-dash/sass/public.scss */
 .wrap { width: 1000px; margin: 0 auto; }
 
-#header { height: 60px; border: 1px solid #0F0; border-width: 0 0 1px 0; margin: 0 0 20px; background-color: #000000; *zoom: 1; filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF000000', endColorstr='#FF222222'); background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #000000), color-stop(100%, #222222)); background-image: -webkit-linear-gradient(top, #000000 0%, #222222 100%); background-image: -moz-linear-gradient(top, #000000 0%, #222222 100%); background-image: -o-linear-gradient(top, #000000 0%, #222222 100%); background-image: -ms-linear-gradient(top, #000000 0%, #222222 100%); background-image: linear-gradient(top, #000000 0%, #222222 100%); *zoom: 1; }
+/* line 27, ../../batsd-dash/sass/public.scss */
+#header { height: 60px; border: 1px solid lime; border-width: 0 0 1px 0; margin: 0 0 20px; background-color: #000000; *zoom: 1; filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF000000', endColorstr='#FF222222'); background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #000000), color-stop(100%, #222222)); background-image: -webkit-linear-gradient(top, #000000 0%, #222222 100%); background-image: -moz-linear-gradient(top, #000000 0%, #222222 100%); background-image: -o-linear-gradient(top, #000000 0%, #222222 100%); background-image: -ms-linear-gradient(top, #000000 0%, #222222 100%); background-image: linear-gradient(top, #000000 0%, #222222 100%); *zoom: 1; }
+/* line 38, ../../../../../.rvm/gems/ruby-1.9.2-p290/gems/compass-0.12.1/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
 #header:after { content: ""; display: table; clear: both; }
+/* line 36, ../../batsd-dash/sass/public.scss */
 #header h1 { float: left; font-size: 28px; padding: 15px 0 0; }
+/* line 37, ../../batsd-dash/sass/public.scss */
 #header ul { float: right; width: 300px; margin: 15px 0; }
+/* line 40, ../../batsd-dash/sass/public.scss */
 #header ul li { float: left; margin: 0 20px; }
+/* line 42, ../../batsd-dash/sass/public.scss */
 #header ul li a { cursor: pointer; }
 
+/* line 47, ../../batsd-dash/sass/public.scss */
 #content { color: #FFF; width: 1000px; margin: 0 auto; font-size: 18px; }
+/* line 50, ../../batsd-dash/sass/public.scss */
 #content h1 { font-size: 26px; margin: 30px 0; }
+/* line 51, ../../batsd-dash/sass/public.scss */
 #content h2 { font-size: 24px; margin: 20px 0; }
+/* line 54, ../../batsd-dash/sass/public.scss */
 #content p em { font-style: italic; margin: 0 -4px 0 0; }
-#content .graph { width: 900px; height: 400px; margin: 0 auto; }
-#content .graph h2 { text-align: center; margin: 180px; }
+/* line 57, ../../batsd-dash/sass/public.scss */
+#content .graph { height: 400px; width: 880px; position: relative; margin: 0 auto; }
+/* line 64, ../../batsd-dash/sass/public.scss */
+#content .graph em { height: 30px; width: 300px; position: absolute; top: 185px; left: 290px; padding: 2px 0; font-size: 26px; text-align: center; -webkit-animation-name: blink; -webkit-animation-duration: 1s; -webkit-animation-iteration-count: infinite; }
+/* line 77, ../../batsd-dash/sass/public.scss */
 #content .inputs { width: 900px; margin: 0 auto 30px; text-align: center; }
+/* line 80, ../../batsd-dash/sass/public.scss */
 #content .inputs label { font-weight: bold; }
+/* line 81, ../../batsd-dash/sass/public.scss */
 #content .inputs input { width: 200px; }
+
+/* line 85, ../../batsd-dash/sass/public.scss */
+#loading { height: 100px; width: 280px; position: absolute; top: 150px; left: 300px; display: none; }
+/* line 90, ../../batsd-dash/sass/public.scss */
+#loading strong { float: right; font-size: 26px; margin: 36px 0 0; }
+/* line 96, ../../batsd-dash/sass/public.scss */
+#loading #spinner { position: relative; float: left; width: 100px; height: 100px; -webkit-animation-name: rotateSpinner; -webkit-animation-duration: 2s; -webkit-animation-iteration-count: infinite; -webkit-animation-timing-function: linear; }
+/* line 107, ../../batsd-dash/sass/public.scss */
+#loading #spinner div { width: 10px; height: 30px; background: lime; position: absolute; top: 35px; left: 45px; }
+/* line 122, ../../batsd-dash/sass/public.scss */
+#loading #spinner .bar1 { -webkit-transform:  scale(1, 1) rotateZ(0deg) translate(0px, -40px); -moz-transform:  scale(1, 1) rotateZ(0deg) translate(0px, -40px); -ms-transform:  scale(1, 1) rotateZ(0deg) translate(0px, -40px); -o-transform:  scale(1, 1) rotateZ(0deg) translate(0px, -40px); transform:  scale(1, 1) rotateZ(0deg) translate(0px, -40px); opacity: 0.12; }
+/* line 122, ../../batsd-dash/sass/public.scss */
+#loading #spinner .bar2 { -webkit-transform:  scale(1, 1) rotateZ(45deg) translate(0px, -40px); -moz-transform:  scale(1, 1) rotateZ(45deg) translate(0px, -40px); -ms-transform:  scale(1, 1) rotateZ(45deg) translate(0px, -40px); -o-transform:  scale(1, 1) rotateZ(45deg) translate(0px, -40px); transform:  scale(1, 1) rotateZ(45deg) translate(0px, -40px); opacity: 0.24; }
+/* line 122, ../../batsd-dash/sass/public.scss */
+#loading #spinner .bar3 { -webkit-transform:  scale(1, 1) rotateZ(90deg) translate(0px, -40px); -moz-transform:  scale(1, 1) rotateZ(90deg) translate(0px, -40px); -ms-transform:  scale(1, 1) rotateZ(90deg) translate(0px, -40px); -o-transform:  scale(1, 1) rotateZ(90deg) translate(0px, -40px); transform:  scale(1, 1) rotateZ(90deg) translate(0px, -40px); opacity: 0.37; }
+/* line 122, ../../batsd-dash/sass/public.scss */
+#loading #spinner .bar4 { -webkit-transform:  scale(1, 1) rotateZ(135deg) translate(0px, -40px); -moz-transform:  scale(1, 1) rotateZ(135deg) translate(0px, -40px); -ms-transform:  scale(1, 1) rotateZ(135deg) translate(0px, -40px); -o-transform:  scale(1, 1) rotateZ(135deg) translate(0px, -40px); transform:  scale(1, 1) rotateZ(135deg) translate(0px, -40px); opacity: 0.49; }
+/* line 122, ../../batsd-dash/sass/public.scss */
+#loading #spinner .bar5 { -webkit-transform:  scale(1, 1) rotateZ(180deg) translate(0px, -40px); -moz-transform:  scale(1, 1) rotateZ(180deg) translate(0px, -40px); -ms-transform:  scale(1, 1) rotateZ(180deg) translate(0px, -40px); -o-transform:  scale(1, 1) rotateZ(180deg) translate(0px, -40px); transform:  scale(1, 1) rotateZ(180deg) translate(0px, -40px); opacity: 0.62; }
+/* line 122, ../../batsd-dash/sass/public.scss */
+#loading #spinner .bar6 { -webkit-transform:  scale(1, 1) rotateZ(225deg) translate(0px, -40px); -moz-transform:  scale(1, 1) rotateZ(225deg) translate(0px, -40px); -ms-transform:  scale(1, 1) rotateZ(225deg) translate(0px, -40px); -o-transform:  scale(1, 1) rotateZ(225deg) translate(0px, -40px); transform:  scale(1, 1) rotateZ(225deg) translate(0px, -40px); opacity: 0.74; }
+/* line 122, ../../batsd-dash/sass/public.scss */
+#loading #spinner .bar7 { -webkit-transform:  scale(1, 1) rotateZ(270deg) translate(0px, -40px); -moz-transform:  scale(1, 1) rotateZ(270deg) translate(0px, -40px); -ms-transform:  scale(1, 1) rotateZ(270deg) translate(0px, -40px); -o-transform:  scale(1, 1) rotateZ(270deg) translate(0px, -40px); transform:  scale(1, 1) rotateZ(270deg) translate(0px, -40px); opacity: 0.87; }
+/* line 122, ../../batsd-dash/sass/public.scss */
+#loading #spinner .bar8 { -webkit-transform:  scale(1, 1) rotateZ(315deg) translate(0px, -40px); -moz-transform:  scale(1, 1) rotateZ(315deg) translate(0px, -40px); -ms-transform:  scale(1, 1) rotateZ(315deg) translate(0px, -40px); -o-transform:  scale(1, 1) rotateZ(315deg) translate(0px, -40px); transform:  scale(1, 1) rotateZ(315deg) translate(0px, -40px); opacity: 0.99; }
+
+@-webkit-keyframes rotateSpinner { /* line 141, ../../batsd-dash/sass/public.scss */
+  from { -webkit-transform: scale(0.5) rotate(0deg); }
+  /* line 142, ../../batsd-dash/sass/public.scss */
+  to { -webkit-transform: scale(0.5) rotate(360deg); } }
+
+@-webkit-keyframes blink { /* line 146, ../../batsd-dash/sass/public.scss */
+  0% { opacity: 1.0; }
+  /* line 147, ../../batsd-dash/sass/public.scss */
+  50% { opacity: 0.25; }
+  /* line 148, ../../batsd-dash/sass/public.scss */
+  100% { opacity: 1.0; } }

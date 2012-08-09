@@ -1,15 +1,31 @@
-@import "compass/utilities/general/clearfix";
 @import "compass/css3";
+
+@import "compass/utilities/general/clearfix";
 @import "compass/reset";
 
+$green: #0F0;
+$graphHeight:400px;
+$graphWidth:880px;
+
+@mixin absolute-position($height, $width){
+    height:$height;
+    width:$width;
+
+    position:absolute;
+    top: ($graphHeight / 2) - ($height / 2);
+    left: ($graphWidth / 2) - ($width / 2);
+}
+
+
 html, body { height:100%; min-height:100%; background-color:#222; }
-h1, h2 { color:#0F0; font-family:"Courier New",Courier,monospace; }
+
+h1, h2, strong, em { color:$green; font-family:"Courier New",Courier,monospace; }
 a { text-decoration:none; color:inherit; }
 
 .wrap { width:1000px; margin:0 auto; }
 
 #header {
-    height:60px; border:1px solid #0F0; border-width:0 0 1px 0; margin:0 0 20px;
+    height:60px; border:1px solid $green; border-width:0 0 1px 0; margin:0 0 20px;
 
     background-color: #000000;
     @include filter-gradient(#000000, #222, vertical);
@@ -28,7 +44,6 @@ a { text-decoration:none; color:inherit; }
     }
 }
 
-
 #content {
     color:#FFF; width:1000px; margin:0 auto; font-size:18px;
 
@@ -40,9 +55,23 @@ a { text-decoration:none; color:inherit; }
     }
 
     .graph {
-        width:900px; height:400px; margin:0 auto;
+        height:$graphHeight;
+        width:$graphWidth;
 
-        h2 { text-align:center; margin:180px; }
+        position:relative;
+        margin:0 auto;
+
+        em {
+            @include absolute-position(30px, 300px);
+
+            padding:2px 0;
+            font-size:26px;
+            text-align:center;
+
+            -webkit-animation-name:blink;
+            -webkit-animation-duration:1s;
+            -webkit-animation-iteration-count:infinite;
+        }
     }
 
     .inputs {
@@ -53,4 +82,68 @@ a { text-decoration:none; color:inherit; }
     }
 }
 
+#loading {
+    @include absolute-position(100px, 280px);
 
+    display:none;
+
+    strong {
+        float:right;
+        font-size:26px;
+        margin:36px 0 0;
+    }
+
+    #spinner {
+        position:relative;
+        float:left;
+        width:100px;
+        height:100px;
+
+        -webkit-animation-name: rotateSpinner;
+        -webkit-animation-duration:2s;
+        -webkit-animation-iteration-count:infinite;
+        -webkit-animation-timing-function:linear;
+
+        div {
+            width:10px;
+            height:30px;
+            background:$green;
+
+            position: absolute;
+            top:35px;
+            left:45px;
+        }
+
+        $i:1;
+        $rotate:0deg;
+        $opacity:0.12;
+
+        @while ($i <= 8) {
+            .bar#{$i} {
+                @include simple-transform(1, $rotate, 0px, -40px);
+
+                opacity:$opacity;
+            }
+
+            @if ($i % 2 == 0){
+                $opacity:$opacity + 0.13;
+            } @else {
+                $opacity:$opacity + 0.12;
+            }
+
+            $rotate: $rotate + 45deg;
+            $i: $i + 1;
+        }
+    }
+}
+
+@-webkit-keyframes rotateSpinner {
+    from { -webkit-transform:scale(0.5) rotate(0deg);   }
+    to   { -webkit-transform:scale(0.5) rotate(360deg); }
+}
+
+@-webkit-keyframes blink {
+    0%   { opacity:1.0;  }
+    50%  { opacity:0.25; }
+    100% { opacity:1.0;  }
+}
