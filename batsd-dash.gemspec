@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/mikeycgto/batsd-dash"
 
   s.summary     = %q{batsd-dash}
-  s.description = %q{batsd-dash - graphs and stuff from batsd. yay!}
+  s.description = %q{batsd-dash - graphs and stuff for batsd. yay!}
 
   s.rubyforge_project = "batsd-dash"
 
