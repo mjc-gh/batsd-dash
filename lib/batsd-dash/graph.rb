@@ -22,6 +22,7 @@ module BatsdDash
         # loop through values to transform and zerofill
         while index < values.size - 1
           obj = transform_point_at!(index += 1, values)
+          next unless opts[:zero_fill]
 
           if obj.first <= time
             time += step
@@ -29,7 +30,7 @@ module BatsdDash
           end
 
           # need to insert zerofilled point (if zerofill is enabled)
-          values.insert(index, [time, 0]) if opts[:zero_fill]
+          values.insert(index, [time, 0])
           time += step
         end
       end

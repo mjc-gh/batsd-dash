@@ -55,11 +55,8 @@ module BatsdDash
       return render_error('Invalid time range') unless range
       return render_error('Invalid metrics') if statistics.empty?
 
-			results = []
-			options = {
-				range: range.dup.map { |n| n * 1000 },
-				zero_fill: !params[:no_zero_fill]
-			}
+      results = []
+      options = { range: range.dup.map { |n| n * 1000 } }
 
       statistics.each do |datatype, metrics|
         metrics.each do |metric|
@@ -69,6 +66,7 @@ module BatsdDash
           deferrable.errback { |e| return render_error(e.message) }
           deferrable.callback do |json|
             options[:interval] ||= json['interval']
+            options[:zero_fill] = !statistic.start_with?('gauges') && params[!:no_zero_fill]
 
             points = json[statistic] || []
             values = values_for_graph(points, options)
