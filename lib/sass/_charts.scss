@@ -1,0 +1,37 @@
+.nvd3 {
+    .nv-series {
+        text {
+            fill:$color;
+            font-weight:bold;
+        }
+    }
+
+    .nv-axis {
+        text {
+            fill:$color;
+        }
+
+        line.tick, path.domain {
+            stroke:$color;
+        }
+    }
+
+    &.nv-noData {
+        fill:$green;
+        font-size:28px;
+        font-family:$fontFamily;
+    }
+}
+
+
+.nvtooltip {
+    min-width:80px;
+
+    h3 {
+        font-weight:bold;
+    }
+
+    h3, p {
+        color:$bgColor;
+    }
+}

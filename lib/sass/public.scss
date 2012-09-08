@@ -4,6 +4,12 @@
 @import "compass/reset";
 
 $green: #0F0;
+$color: #EEE;
+$bgColor: #222;
+
+$fontFamily:"Courier New",Courier,monospace;
+
+$contentWidth:1000px;
 $graphHeight:400px;
 $graphWidth:880px;
 
@@ -17,25 +23,35 @@ $graphWidth:880px;
 }
 
 
-html, body { height:100%; min-height:100%; background-color:#222; }
-
-h1, h2, strong, em { color:$green; font-family:"Courier New",Courier,monospace; }
+html, body { height:100%; min-height:100%; background-color:$bgColor; }
+h1, h2, strong, em { color:$green; font-family:$fontFamily; }
 a { text-decoration:none; color:inherit; }
 
 .wrap { width:1000px; margin:0 auto; }
 
 #header {
-    height:60px; border:1px solid $green; border-width:0 0 1px 0; margin:0 0 20px;
+    height:60px;
+    margin:0 0 20px;
 
+    border:1px solid $green;
+    border-width:0 0 1px 0;
     background-color: #000000;
-    @include filter-gradient(#000000, #222, vertical);
-    @include background-image(linear-gradient(top, #000000 0%,#222 100%));
+
+    @include filter-gradient(#000000, $bgColor, vertical);
+    @include background-image(linear-gradient(top, #000000 0%, $bgColor 100%));
 
     @include pie-clearfix;
 
-    h1 { float:left; font-size:28px; padding:15px 0 0; }
+    h1 {
+        float:left;
+        font-size:28px;
+        padding:15px 0 0;
+    }
+
     ul {
-        float:right; width:300px; margin:15px 0;
+        float:right;
+        width:300px;
+        margin:15px 0;
 
         li {
             float:left; margin:0 20px;
@@ -45,7 +61,10 @@ a { text-decoration:none; color:inherit; }
 }
 
 #content {
-    color:#FFF; width:1000px; margin:0 auto; font-size:18px;
+    width:$contentWidth;
+    margin:0 auto;
+    font-size:18px;
+    color:$color;
 
     h1 { font-size:26px; margin:30px 0; }
     h2 { font-size:24px; margin:20px 0; }
@@ -75,7 +94,9 @@ a { text-decoration:none; color:inherit; }
     }
 
     .inputs {
-        width:900px; margin:0 auto 30px; text-align:center;
+        width:900px;
+        margin:0 auto 30px;
+        text-align:center;
 
         label { font-weight:bold; }
         input { width:200px; }
@@ -84,13 +105,16 @@ a { text-decoration:none; color:inherit; }
 
 #loading {
     @include absolute-position(100px, 280px);
+    @include border-radius(8px);
+    @include opacity(0);
 
-    display:none;
+    border:2px solid rgba($green, 0.25);
+    background: darken($bgColor, 1%);
 
     strong {
         float:right;
         font-size:26px;
-        margin:36px 0 0;
+        margin:36px 10px 0;
     }
 
     #spinner {
@@ -147,3 +171,5 @@ a { text-decoration:none; color:inherit; }
     50%  { opacity:0.25; }
     100% { opacity:1.0;  }
 }
+
+@import "charts";
