@@ -1,14 +1,11 @@
 require 'yajl'
 require 'sinatra/base'
 require 'sinatra/synchrony'
-#require 'sinatra/reloader' if ENV['RACK_ENV'] == 'development'
 
 %w[connection_pool graph params version].each { |file| require "batsd-dash/#{file}" }
 
 module BatsdDash
   class App < Sinatra::Base
-    #configure(:development) { register Sinatra::Reloader }
-
     configure do
       register Sinatra::Synchrony
       helpers ParamsHelper, GraphHelper, ConnectionHelpers
@@ -58,6 +55,7 @@ module BatsdDash
       results = []
       options = { range: range.dup.map { |n| n * 1000 } }
 
+      # TODO fetch in parallel?
       statistics.each do |datatype, metrics|
         metrics.each do |metric|
           statistic = "#{datatype}:#{metric}"

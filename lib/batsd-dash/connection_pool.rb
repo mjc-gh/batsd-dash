@@ -1,7 +1,7 @@
 module BatsdDash
   module ConnectionHelpers
     def connection_pool
-      ConnectionPool.pool or render_error('Connect pool failed to connect to Batsd')
+      ConnectionPool.pool or render_error('Connection pool failed to connect to Batsd')
     end
   end
 
