@@ -1,18 +1,16 @@
 require 'yajl'
+require 'haml'
 require 'sinatra/base'
-require 'sinatra/synchrony'
 
-%w[connection_pool graph params version].each { |file| require "batsd-dash/#{file}" }
+%w[graph params version].each { |f| require "batsd-dash/#{f}" }
 
 module BatsdDash
   class App < Sinatra::Base
     configure do
-      register Sinatra::Synchrony
-      helpers ParamsHelper, GraphHelper, ConnectionHelpers
+      helpers ParamsHelper, GraphHelper#, ConnectionHelpers
 
-      set :haml, :format => :html5
-
-      EM::Synchrony.next_tick { ConnectionPool::initialize_connection_pool }
+      set :haml, format: :html5
+      set :server, :puma
     end
 
     helpers do
@@ -29,18 +27,18 @@ module BatsdDash
       haml :root
     end
 
-    get "/version", :provides => :json do
+    get "/version", provides: :json do
       render_json version: BatsdDash::VERSION
     end
 
-    get "/available", :provides => :json do
-      connection_pool.async_available_list.callback do |json|
-        render_json json
-      end
+    get "/available", provides: :json do
+      #connection_pool.async_available_list.callback do |json|
+      #  render_json json
+      #end
     end
 
     # this route renders the template (with codes for the graph)
-    get "/graph", :provides => :html do
+    get "/graph", provides: :html do
       haml :view
     end
 
@@ -63,8 +61,8 @@ module BatsdDash
 
           deferrable.errback { |e| return render_error(e.message) }
           deferrable.callback do |json|
-            options[:interval] ||= json['interval']
-            options[:zero_fill] = !statistic.start_with?('gauges') && params[!:no_zero_fill]
+            #options[:interval] ||= json['interval']
+            #options[:zero_fill] = !statistic.start_with?('gauges') && params[!:no_zero_fill]
 
             points = json[statistic] || []
             values = values_for_graph(points, options)
