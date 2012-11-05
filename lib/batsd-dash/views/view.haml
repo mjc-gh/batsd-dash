@@ -1,0 +1,18 @@
+.inputs
+  %label{:for => 'start'} Start Time
+  %input.date-time.ui-widget.ui-corner-all{:type => 'text', :name => 'start'}
+
+  %label{:for => 'stop'} Stop Time
+  %input.date-time.ui-widget.ui-corner-all{:type => 'text', :name => 'stop'}
+
+  %button View
+
+#main-graph.graph
+  %svg
+
+  #loading
+    #spinner
+      - 8.times do |n|
+        %div{:class => "bar#{n + 1}"}
+
+    %strong Loading...

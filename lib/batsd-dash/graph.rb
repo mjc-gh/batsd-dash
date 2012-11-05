@@ -1,12 +1,16 @@
 # helpers for parsing and validating input
-module BatsdDash
+module Batsd::Dash
   module GraphHelper
     ##
     # This method works directly against values. It will tranform all
     # datapoint to an array where the first element is a milisecond
     # timestamp and the second is a float value data point.
+    #
+    # @param [Array] values array of datapoints
+    # @param [Hash] opts optional options hash
+    # @return [Array] modified values array
     def values_for_graph(values, opts = {})
-      return values if values.empty?
+        return values if values.empty?
 
       values.tap do |pts|
         step = opts[:interval] * 1000
@@ -37,7 +41,11 @@ module BatsdDash
     end
 
     ##
-    # Transform a point at a given index
+    # Transform a point at a given index. Works against
+    # values array
+    #
+    # @param [Integer] index
+    # @param [Array] values array of values
     def transform_point_at!(index, values)
       data_pt = values[index]
 

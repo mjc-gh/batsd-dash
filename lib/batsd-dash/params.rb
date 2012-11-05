@@ -1,6 +1,10 @@
 # helpers for processing params and validating input
-module BatsdDash
+module Batsd::Dash
   module ParamsHelper
+    ##
+    # Parse params and return stats hash
+    #
+    # @return [Hash] stats hash
     def parse_statistics
       Hash.new { |hash,key| hash[key] = [] }.tap do |stats|
         %w[ counters gauges timers ].each do |datatype|
@@ -9,11 +13,15 @@ module BatsdDash
           list = [list] unless Array === list
           list.reject! { |m| m.nil? || m.empty? }
 
-					stats[datatype] = list unless list.empty?
+          stats[datatype] = list unless list.empty?
         end
       end
     end
 
+    ##
+    # Parse time range from params
+    #
+    # @return [Array] an array with 2 elements (start and stop)
     def parse_time_range
       start, stop = params[:start], params[:stop]
 

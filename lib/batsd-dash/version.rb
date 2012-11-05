@@ -1,3 +1,3 @@
-module BatsdDash
-  VERSION = '0.3.1'
+module Batsd::Dash
+  VERSION = '0.5.0'
 end

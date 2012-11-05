@@ -1,79 +1,18 @@
-require 'yajl'
-require 'haml'
 require 'sinatra/base'
+require 'haml'
 
-%w[graph params version].each { |f| require "batsd-dash/#{f}" }
-
-module BatsdDash
-  class App < Sinatra::Base
-    configure do
-      helpers ParamsHelper, GraphHelper#, ConnectionHelpers
-
-      set :haml, format: :html5
-      set :server, :puma
-    end
-
-    helpers do
-      def render_error(msg)
-        render_json 400, error: msg
-      end
-
-      def render_json(code = 200, json)
-        halt code, String === json ? json : Yajl::Encoder.encode(json)
-      end
-    end
-
-    get "/" do
-      haml :root
-    end
-
-    get "/version", provides: :json do
-      render_json version: BatsdDash::VERSION
-    end
-
-    get "/available", provides: :json do
-      #connection_pool.async_available_list.callback do |json|
-      #  render_json json
-      #end
-    end
-
-    # this route renders the template (with codes for the graph)
-    get "/graph", provides: :html do
-      haml :view
-    end
-
-    # actual data API route
-    get "/data", :provides => :json do
-      statistics = parse_statistics
-      range = parse_time_range
-
-      return render_error('Invalid time range') unless range
-      return render_error('Invalid metrics') if statistics.empty?
-
-      results = []
-      options = { range: range.dup.map { |n| n * 1000 } }
-
-      # TODO fetch in parallel?
-      statistics.each do |datatype, metrics|
-        metrics.each do |metric|
-          statistic = "#{datatype}:#{metric}"
-          deferrable = connection_pool.async_values(statistic, range)
-
-          deferrable.errback { |e| return render_error(e.message) }
-          deferrable.callback do |json|
-            #options[:interval] ||= json['interval']
-            #options[:zero_fill] = !statistic.start_with?('gauges') && params[!:no_zero_fill]
-
-            points = json[statistic] || []
-            values = values_for_graph(points, options)
-
-            results << { key: metric, type: datatype[0..-2], values: values }
-          end
-        end
-      end
-
-      cache_control :no_cache, :no_store
-      render_json range: options[:range], interval: options[:interval], results: results
+module Batsd
+  module Dash
+    class << self
+      attr_accessor :config
     end
   end
 end
+
+require 'batsd-dash/version'
+require 'batsd-dash/connection'
+require 'batsd-dash/params'
+require 'batsd-dash/graph'
+
+# require Sinatra App
+require 'batsd-dash/app'
