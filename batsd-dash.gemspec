@@ -21,18 +21,14 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  # specify any dependencies here; for example:
   s.add_dependency "sinatra"
-  s.add_dependency "sinatra-contrib"
-  s.add_dependency "sinatra-synchrony", "~> 0.3.2"
-
   s.add_dependency "haml"
-  s.add_dependency "yajl-ruby"
+
+  s.add_dependency "connection_pool"
+  s.add_dependency "multi_json"
 
   s.add_development_dependency "rake"
   s.add_development_dependency "minitest"
   s.add_development_dependency "mocha"
   s.add_development_dependency "turn"
-
-  s.add_development_dependency "thin"
 end

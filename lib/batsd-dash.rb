@@ -1,6 +1,3 @@
-require 'sinatra/base'
-require 'haml'
-
 module Batsd
   module Dash
     class << self

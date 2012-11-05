@@ -1,3 +1,6 @@
+require 'sinatra/base'
+require 'haml'
+
 module Batsd::Dash
   class App < Sinatra::Base
     configure do
