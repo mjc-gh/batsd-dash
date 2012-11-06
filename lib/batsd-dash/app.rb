@@ -5,17 +5,26 @@ module Batsd::Dash
   class App < Sinatra::Base
     configure do
       helpers ParamsHelper, GraphHelper
-
       set :haml, format: :html5
-      set :server, :puma
 
-      @config = Batsd::Dash::config || { host: 'localhost', port: '8127' }
-      @connection_pool = ConnectionPool.new(@config) do
-        Connection.new(@config[:host], @config[:port])
+      config = Batsd::Dash::config || {}
+
+      set :views, [views, config.delete(:view_path)].compact
+      set :host, config.delete(:host) || 'localhost'
+      set :port, config.delete(:port) || 8127
+
+      @connection_pool = ConnectionPool.new(config) do
+        Connection.new(host, port)
       end
     end
 
     helpers do
+      def find_template(views, name, engine, &block)
+        path = [:root, :view, :missing, :layout].include?(name) ? views.first : views.last
+
+        super(path, name, engine, &block)
+      end
+
       def render_error(msg)
         render_json 400, error: msg
       end
@@ -29,13 +38,20 @@ module Batsd::Dash
       end
     end
 
-    get "/" do
+    get "/", provides: :html do
       haml :root
     end
 
-    # this route renders the template (with codes for the graph)
     get "/graph", provides: :html do
       haml :view
+    end
+
+    get %r[/([A-Za-z0-9-_]+)$], provides: :html do
+      begin
+        haml params[:captures].first.to_sym
+      rescue Errno::ENOENT
+        haml :missing
+      end
     end
 
     get "/version", provides: :json do

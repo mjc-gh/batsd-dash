@@ -10,6 +10,3 @@ require 'batsd-dash/version'
 require 'batsd-dash/connection'
 require 'batsd-dash/params'
 require 'batsd-dash/graph'
-
-# require Sinatra App
-require 'batsd-dash/app'

@@ -1,6 +1,14 @@
 %h2 Template Not Found
 %p
   The template,
-  %em #{params[:view]}.haml
-  \, was found within the defined
-  %em view_path
+  %em #{params[:captures].first}.haml
+  was not found.
+%p
+  - if settings.views.size > 1
+    To make this template available, define it within
+    %em #{settings.views.last}
+  - else
+    There is no
+    %em view_path
+    set within
+    %em Batsd::Dash::config
