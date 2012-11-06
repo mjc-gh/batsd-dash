@@ -21,7 +21,7 @@ module Batsd::Dash
       end
 
       def render_json(code = 200, json)
-        halt code, String === json ? json : Yajl::Encoder.encode(json)
+        halt code, String === json ? json : JSON::dump(json)
       end
 
       def connection_pool
@@ -59,9 +59,9 @@ module Batsd::Dash
       options = { range: range.dup.map { |n| n * 1000 } }
       results = []
 
-      statistics.each do |datatype, metrics|
-        metrics.each do |metric|
-          connection_pool.with do |conn|
+      connection_pool.with do |conn|
+        statistics.each do |datatype, metrics|
+          metrics.each do |metric|
             statistic = "#{datatype}:#{metric}"
             json = conn.values(statistic, range)
 

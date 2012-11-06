@@ -4,7 +4,7 @@ require 'batsd-dash/version'
 
 Gem::Specification.new do |s|
   s.name        = "batsd-dash"
-  s.version     = BatsdDash::VERSION
+  s.version     = Batsd::Dash::VERSION
 
   s.authors     = ["mikeycgto", "btoconnor"]
   s.email       = ["mikeycgto@gmail.com", "gatzby3jr@gmail.com"]
