@@ -70,7 +70,10 @@ a { text-decoration:none; color:inherit; }
     h2 { font-size:24px; margin:20px 0; }
 
     p {
-        em { font-style:italic; margin:0 -4px 0 0; }
+        margin:20px 0;
+        text-align:center;
+
+        em { font-style:italic; }
     }
 
     .graph {
