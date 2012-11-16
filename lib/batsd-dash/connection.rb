@@ -1,11 +1,15 @@
 require 'socket'
-require 'multi_json'
 require 'connection_pool'
 
 module Batsd::Dash
   class Connection
+    attr_reader :socket
+
     def initialize(host, port)
-      @socket = TCPSocket.new(host, port)
+      @host = host
+      @port = port
+
+      connect_socket
     end
 
     def available
@@ -18,15 +22,22 @@ module Batsd::Dash
 
     private
 
-    def query(command)
-      @socket.puts command
+    def connect_socket
+      @socket = TCPSocket.new(@host, @port)
+    rescue Errno::ECONNREFUSED
+      @socket = nil
+    end
 
-      MultiJson.load @socket.gets
+    def query(command)
+      connect_socket unless socket
+      return if socket.nil?
+
+      socket.puts command
+
+      JSON.parse socket.gets
 
     rescue TimeoutError => e
-      puts "Connection Timeout: #{e}"
-
-      return nil
+      return
     end
   end
 end

@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'haml'
+require 'json'
 
 module Batsd::Dash
   class App < Sinatra::Base
@@ -13,6 +14,8 @@ module Batsd::Dash
       set :host, config.delete(:host) || 'localhost'
       set :port, config.delete(:port) || 8127
 
+      set :view_names, [:root, :view, :missing, :layout, :loading]
+
       @connection_pool = ConnectionPool.new(config) do
         Connection.new(host, port)
       end
@@ -20,7 +23,7 @@ module Batsd::Dash
 
     helpers do
       def find_template(views, name, engine, &block)
-        path = [:root, :view, :missing, :layout].include?(name) ? views.first : views.last
+        path = settings.view_names.include?(name) ? views.first : views.last
 
         super(path, name, engine, &block)
       end
@@ -30,7 +33,7 @@ module Batsd::Dash
       end
 
       def render_json(code = 200, json)
-        halt code, String === json ? json : JSON::dump(json)
+        halt code, String === json ? json : JSON.dump(json)
       end
 
       def connection_pool
@@ -48,7 +51,7 @@ module Batsd::Dash
 
     get %r[/([A-Za-z0-9-_]+)$], provides: :html do
       begin
-        haml params[:captures].first.to_sym
+        haml params[:captures].first.to_sym, locals: { user_template: true }
       rescue Errno::ENOENT
         haml :missing
       end
@@ -66,6 +69,8 @@ module Batsd::Dash
 
     # actual data API route
     get "/data", :provides => :json do
+      cache_control :no_cache, :no_store
+
       statistics = parse_statistics
       range = parse_time_range
 
@@ -81,6 +86,8 @@ module Batsd::Dash
             statistic = "#{datatype}:#{metric}"
             json = conn.values(statistic, range)
 
+            next unless json
+
             options[:interval] ||= json['interval']
             options[:zero_fill] = !statistic.start_with?('gauges') && params[!:no_zero_fill]
 
@@ -92,7 +99,6 @@ module Batsd::Dash
         end
       end
 
-      cache_control :no_cache, :no_store
       render_json range: options[:range], interval: options[:interval], results: results
     end
   end
