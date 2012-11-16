@@ -7,12 +7,54 @@
 
   %button View
 
+= haml :loading, layout: false
+
 #main-graph.graph
-  %svg
 
-  #loading
-    #spinner
-      - 8.times do |n|
-        %div{:class => "bar#{n + 1}"}
+:javascript
+  // TODO find a d3 datetimepicker (or make one)
+  // then drop jquery, jqueryui and datetimerpicker altogether
+  (function(){
+    $('button').button();
 
-    %strong Loading...
+    var now = Date.now();
+    var defaults = [now - (1000 * 60 * 30), now];
+
+    $('.date-time').datetimepicker().each(function(i){
+      var input = $(this);
+      var time = LocationHash.get(input.attr('name'));
+      input.datetimepicker('setDate', new Date(time ? time * 1000 : defaults[i]));
+    });
+  }());
+
+  (function(){
+    var main_el = d3.select('#main-graph');
+    var view = d3.select('button');
+    var inputs = d3.selectAll('.date-time')[0];
+    //var params = LocationHash.params();
+
+    function set_time_params(){
+      var map = {};
+
+      for (var i = 0, elem; elem = inputs[i]; i++)
+        map[elem.name] = +new Date(elem.value) / 1000;
+
+      LocationHash.set(map);
+    }
+
+    function render_graph(){
+      BatsdDash.render(main_el, LocationHash.params());
+    }
+
+    // view button handler
+    view.on('click', function(){
+      set_time_params();
+      render_graph();
+    });
+
+    // listen for changes to URL
+    LocationHash.changed(render_graph);
+
+    // initial graph render
+    render_graph();
+  })();

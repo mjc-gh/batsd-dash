@@ -9,16 +9,17 @@
     -# shitload of deps for a datetimepicker :( (TODO use d3 only)
     %link{:rel => 'stylesheet', :href => '/css/jquery-ui.css', :type => 'text/css'}
     %link{:rel => 'stylesheet', :href => '/css/datetimepicker.css', :type => 'text/css'}
+    %link{:rel => 'stylesheet', :href => '/css/d3.css', :type => 'text/css'}
+    %link{:rel => 'stylesheet', :href => '/css/public.css', :type => 'text/css'}
+
     %script{:src => '/js/jquery.js'}
     %script{:src => '/js/jquery-ui.js'}
     %script{:src => '/js/datetimepicker.js'}
 
-    -# D3 & NV
-    %link{:rel => 'stylesheet', :href => '/css/d3.css', :type => 'text/css'}
     %script{:src => '/js/d3.js'}
     %script{:src => '/js/nv.d3.js'}
 
-    %link{:rel => 'stylesheet', :href => '/css/public.css', :type => 'text/css'}
+    %script{:src => '/js/dash.js'}
 
   %body
     #header
@@ -29,4 +30,21 @@
     #content
       = yield
 
-    %script{:src => '/js/dash.js'}
+    - if locals && locals[:user_template]
+      = haml :loading, layout: false
+
+      :javascript
+        (function(dash){
+          d3.selectAll('.graph').each(function(){
+            var params = {};
+
+            d3.map(this.dataset).forEach(function(key, val){
+              if (key != 'start' && key != 'stop')
+                val = val.split(/\s+/);
+
+              params[key] = val;
+            });
+
+            BatsdDash.render(d3.select(this), LocationHash.build(params));
+          });
+        }());

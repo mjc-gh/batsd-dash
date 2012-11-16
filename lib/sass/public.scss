@@ -61,6 +61,7 @@ a { text-decoration:none; color:inherit; }
 }
 
 #content {
+    position:relative;
     width:$contentWidth;
     margin:0 auto;
     font-size:18px;
@@ -79,8 +80,6 @@ a { text-decoration:none; color:inherit; }
     .graph {
         height:$graphHeight;
         width:$graphWidth;
-
-        position:relative;
         margin:0 auto;
 
         em {
@@ -107,12 +106,15 @@ a { text-decoration:none; color:inherit; }
 }
 
 #loading {
-    @include absolute-position(100px, 280px);
     @include border-radius(8px);
     @include opacity(0);
 
     border:2px solid rgba($green, 0.25);
     background: darken($bgColor, 1%);
+
+    position:absolute;
+    top:50%; left:50%;
+    margin:-52px 0 0 -142px;
 
     strong {
         float:right;
@@ -160,6 +162,21 @@ a { text-decoration:none; color:inherit; }
 
             $rotate: $rotate + 45deg;
             $i: $i + 1;
+        }
+    }
+
+
+    &.fade {
+        -webkit-transition: opacity 0.5s ease-in;
+        -moz-transition: opacity 0.5s ease-in;
+        -o-transition: opacity 0.5s ease-in;
+
+        &.in {
+            opacity:1.0;
+        }
+
+        &.out {
+            opacity:0.0;
         }
     }
 }
