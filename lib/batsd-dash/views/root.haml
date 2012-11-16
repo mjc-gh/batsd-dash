@@ -1,0 +1,31 @@
+:javascript
+  (function(){
+    function graph_href(type, metric){
+      if (type == 'timers')
+        metric += ':mean';
+
+      return '/graph#'+ type +'='+ metric;
+    }
+
+    var types = {};
+    var content = d3.select('#content')
+
+    d3.json('/available', function(stats){
+      for (var i = 0, stat; stat = stats[i]; i++){
+        var split = stat.split(':', 2);
+        var type = split[0];
+
+        (types[type] || (types[type] = [])).push(split[1]);
+      }
+
+      for (var type in types){
+        content.append('h3').text(type);
+
+        var metrics = types[type].sort();
+        var list = content.append('ul');
+
+        for (var i = 0, m; m = metrics[i]; i++)
+          list.append('li').append('a').text(m).attr('href', graph_href(type, m));
+      }
+    });
+  }());
