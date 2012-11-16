@@ -1,5 +1,3 @@
-require 'turn'
-require 'mocha'
 require 'sinatra/test_helpers'
 require 'minitest/autorun'
 require 'rack/test'
@@ -7,25 +5,14 @@ require 'rack/test'
 ENV['RACK_ENV'] = 'test'
 include Rack::Test::Methods
 
-# require the app itself
 require 'batsd-dash'
-
-# setup a MockSesion
-module Rack
-  class MockSession
-    alias_method :request_original, :request
-    def request(uri, env)
-      EM.synchrony { EM.next_tick { request_original(uri, env); EM.stop } }
-    end
-  end
-end
-
+require 'batsd-dash/app'
 
 class MiniTest::Spec
   after { mocha_teardown }
 
   def app
-    BatsdDash::App
+    Batsd::Dash::App
   end
 
   def json_response
@@ -33,9 +20,11 @@ class MiniTest::Spec
 
     if oid != @last_response_id
       @last_response_id = oid
-      @last_response_json_body = Yajl::Parser.parse(last_response.body, symbolize_keys: true) rescue nil
+      @last_response_json_body = JSON.parse(last_response.body, symbolize_names: true) rescue nil
     end
 
     @last_response_json_body
   end
 end
+
+require 'mocha'
