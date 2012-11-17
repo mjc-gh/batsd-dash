@@ -11,6 +11,9 @@
     var content = d3.select('#content')
 
     d3.json('/available', function(stats){
+      if (!stats.length)
+        return content.append('strong').text('No Statistics Available');
+
       for (var i = 0, stat; stat = stats[i]; i++){
         var split = stat.split(':', 2);
         var type = split[0];

@@ -15,7 +15,7 @@ $graphWidth:880px;
 
 @mixin absolute-position($height, $width){
     height:$height;
-    width:$width;
+    //width:$width;
 
     position:absolute;
     top: ($graphHeight / 2) - ($height / 2);
@@ -69,13 +69,31 @@ a { text-decoration:none; font-family:$fontFamily; color:inherit; }
 
     h1 { font-size:26px; margin:30px 0; }
     h2 { font-size:24px; margin:20px 0; }
-    h3 { font-size:20px; margin:15px 0; } 
+    h3 { font-size:20px; margin:15px 0; }
 
     p {
         margin:20px 0;
         text-align:center;
 
-        em { font-style:italic; }
+        em {
+            font-style:italic;
+            color:$green;
+        }
+    }
+
+    > strong {
+        margin-top:200px;
+        display:block;
+    }
+
+    strong, .nv-noData {
+        padding:2px 0;
+        font-size:26px;
+        text-align:center;
+
+        -webkit-animation-name:blink;
+        -webkit-animation-duration:1s;
+        -webkit-animation-iteration-count:infinite;
     }
 
     .graph {
@@ -83,16 +101,8 @@ a { text-decoration:none; font-family:$fontFamily; color:inherit; }
         width:$graphWidth;
         margin:0 auto;
 
-        em {
+        strong, .nv-noData {
             @include absolute-position(30px, 300px);
-
-            padding:2px 0;
-            font-size:26px;
-            text-align:center;
-
-            -webkit-animation-name:blink;
-            -webkit-animation-duration:1s;
-            -webkit-animation-iteration-count:infinite;
         }
     }
 
