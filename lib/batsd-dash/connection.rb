@@ -24,13 +24,18 @@ module Batsd::Dash
 
     private
 
-    def connect_socket
-      @socket = TCPSocket.new(@host, @port)
-    rescue Errno::ECONNREFUSED
+    def reset_socket
       @socket = nil
     end
 
-    def query(command)
+    def connect_socket
+      @socket = TCPSocket.new(@host, @port)
+
+    rescue Errno::ECONNREFUSED, Errno::ETIMEDOUT
+      reset_socket
+    end
+
+    def query(command, attempts = 0)
       connect_socket unless socket
 
       raise SocketError.new('Socket not Connected') if socket.nil?
@@ -38,8 +43,12 @@ module Batsd::Dash
       socket.puts command
       JSON.parse socket.gets
 
-    rescue TimeoutError => e
-      return
+    rescue Errno::EPIPE
+      reset_socket
+
+      if attempts < 5
+        query command, attempts + 1
+      end
     end
   end
 end
