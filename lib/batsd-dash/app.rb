@@ -4,11 +4,7 @@ require 'json'
 
 module Batsd::Dash
   class App < Sinatra::Base
-    configure(:development) do
-      disable :raise_errors
-      disable :show_exceptions
-    end
-
+    configure(:development) { disable :show_exceptions }
     configure do
       helpers ParamsHelper, GraphHelper
       set :haml, format: :html5
@@ -73,7 +69,7 @@ module Batsd::Dash
 
     get "/available", provides: :json do
       connection_pool.with do |conn|
-        render_json conn.available || []
+        render_json conn.available
       end
     end
 
