@@ -3,6 +3,8 @@ require 'connection_pool'
 
 module Batsd::Dash
   class Connection
+    class SocketError < Exception; end
+
     attr_reader :socket
 
     def initialize(host, port)
@@ -30,10 +32,10 @@ module Batsd::Dash
 
     def query(command)
       connect_socket unless socket
-      return if socket.nil?
+
+      raise SocketError.new('Socket not Connected') if socket.nil?
 
       socket.puts command
-
       JSON.parse socket.gets
 
     rescue TimeoutError => e
