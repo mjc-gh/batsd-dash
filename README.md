@@ -1,4 +1,4 @@
-batsd-dash
+Batsd-dash
 ==========
 
 Batds-dash Configurable dashboard for [batsd-server](https://github.com/noahhl/batsd).
@@ -17,12 +17,12 @@ full advantage of threads.
   * [Custom Pages](https://github.com/mikeycgto/batsd-dash/wiki/Custom-Pages)
   * [Contributing](https://github.com/mikeycgto/batsd-dash/wiki/Contributing)
 
-## About
+### About
 
 This is project is maintained and developed by [@mikeycgto](https://twitter.com/mikeycgto) 
 and [@btoconnor](https://twitter.com/btoconnor) mainly for use on [BreakBase](http://breakbase.com).
 
-## License
+### License
 
 Copyright (c) 2012 Michael J Coyne
 
