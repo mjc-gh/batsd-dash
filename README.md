@@ -5,14 +5,18 @@ Batds-dash Configurable dashboard for [batsd-server](https://github.com/noahhl/b
 The frontend uses [NVD3](http://nvd3.org/) for rendering graphs. The backend uses 
 [Sinatra](github.com/sinatra/sinatra/) for the actual web application.
 
-The backend server is designed to use a simple threaded connection pool. Thus,
-it is suggested that you run Batsd-dash on JRuby or Rubinius in order to take
-full advantage of threaded processing.
+The backend server is designed to use a threaded [connection pool](https://github.com/mperham/connection_pool).
+Thus, it is suggested that you run Batsd-dash on JRuby or Rubinius in order 
+to take full advantage of threaded processing.
 
 ### Documentation
 
   * [Installation and
     Configuration](https://github.com/mikeycgto/batsd-dash/wiki/Installation-and-Configuration)
+  * [Running the
+    Application](https://github.com/mikeycgto/batsd-dash/wiki/Running-the-Application)
+  * [Viewing
+    Graphs](https://github.com/mikeycgto/batsd-dash/wiki/Viewing-Graphs)
   * [Data API](https://github.com/mikeycgto/batsd-dash/wiki/Data-API)
   * [Custom Pages](https://github.com/mikeycgto/batsd-dash/wiki/Custom-Pages)
   * [Contributing](https://github.com/mikeycgto/batsd-dash/wiki/Contributing)
@@ -24,7 +28,7 @@ and [@btoconnor](https://twitter.com/btoconnor) mainly for use on [BreakBase](ht
 
 ### License
 
-Copyright (c) 2012 Michael J Coyne
+Copyright (c) 2012 Michael J Coyne & Brian O'Connor
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this 
 software and associated documentation files (the "Software"), to deal in the Software
