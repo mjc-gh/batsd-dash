@@ -3,11 +3,11 @@ Batsd-dash
 
 Batds-dash Configurable dashboard for [batsd-server](https://github.com/noahhl/batsd).
 The frontend uses [NVD3](http://nvd3.org/) for rendering graphs. The backend uses 
-[Sinatra](github.com/sinatra/sinatra/) for actual web application.
+[Sinatra](github.com/sinatra/sinatra/) for the actual web application.
 
-The backend server is designed to use a simple threaded connection pool. It is
-suggested that you run Batsd-dash on JRuby or Rubinius in order to take
-full advantage of threads.
+The backend server is designed to use a simple threaded connection pool. Thus,
+it is suggested that you run Batsd-dash on JRuby or Rubinius in order to take
+full advantage of threaded processing.
 
 ### Documentation
 
