@@ -1,91 +1,44 @@
 batsd-dash
 ==========
 
-Configurable dashboard for [batsd-server](https://github.com/noahhl/batsd).
+Batds-dash Configurable dashboard for [batsd-server](https://github.com/noahhl/batsd).
+The frontend uses [NVD3](http://nvd3.org/) for rendering graphs. The backend uses 
+[Sinatra](github.com/sinatra/sinatra/) for actual web application.
 
-## Setup
+The backend server is designed to use a simple threaded connection pool. It is
+suggested that you run Batsd-dash on JRuby or Rubinius in order to take
+full advantage of threads.
 
-### Install
+### Documentation
 
-To install batsd-dash, simply install the gem
-
-    gem install batsd-dash
-
-### Configuration
-
-Here is a sample rackup file (`config.ru`):
-    
-    require 'batsd-dash'
-
-    # set batsd server setting 
-    BatsdDash::ConnectionPool.settings = { host:'localhost', port: 8127, pool_size: 8 }
-
-    # run the app 
-    run BatsdDash::App
-
-Rack is very powerful. You can password protect your batsd-dash instance 
-by using `Rack::Auth::Basic` or `Rack::Auth::Digest::MD5`.
-
-## Viewing Graphs
-
-Graphs are rendered using [nv.d3](http://nvd3.com/), a powerful graph
-and visualization library.
-
-Since rendering is all done on the client, we make use of hash based
-navigation in order to reduce the amount of requests while still
-maintaining 'linkability'.
-
-For example, to view a graph for the counter `a.b` statistic, you would need
-to make the following request from your browser:
-
-    /graph#counters=a.b
-
-The graph view will provide you with a date time picker to make selecting
-different time ranges easier. Graphs are updated when you press the 
-'View' button or when the URL is updated.
-
-It's possible to view more than one metric at the same time. To do this, 
-visit the following route from your browser:
-
-    /graph#counters=a.b,c.d
-
-You can also view different datatypes at the same time:
-
-    /graph#counters=a.b&timers=x.y
-
-__NOTE__: As of now, a single y-axis is used when datatypes are mixed.
-Soon, we will add support for multiple axis when viewing mixed types.
-
-## Data API
-
-The application provides a simple JSON-based API for accessing data from
-the batds data server. The data API accepts similar parameters as the
-graph view but uses traditional query strings instead: 
-
-    /data?counters[]=a.b&counters[]=c.d&timers[]=x.y
-
-The data API also accepts a `start` and `stop` unix timestamp parameter 
-for accessing different ranges of data. Note that, the data API will
-only respond with JSON if the `Accept` header to set to `application/json`!
-
-## Graph and Render Options
-
-1. Zerofill:
-   __TODO__ Add details about zerofill
-
-
-## Development
-
-### Asset Management
-
-We use Sass for CSS within this project. If you make any changes to the Sass
-files, ensure you recompile the CSS. This is done by running:
-    
-    compass compile --force --output-style compact --environment production --sass-dir lib/batsd-dash/sass --css-dir lib/public/css
-
-Additionally, it is highly recommended you use thin for development since this
-app uses EventMachine.
+  * [Installation and
+    Configuration](https://github.com/mikeycgto/batsd-dash/wiki/Installation-and-Configuration)
+  * [Data API](https://github.com/mikeycgto/batsd-dash/wiki/Data-API)
+  * [Custom Pages](https://github.com/mikeycgto/batsd-dash/wiki/Custom-Pages)
+  * [Contributing](https://github.com/mikeycgto/batsd-dash/wiki/Contributing)
 
 ## About
 
-This is project is maintained and developed by the people behind [BreakBase](http://breakbase.com) ([@mikeycgto](https://twitter.com/mikeycgto) and [@btoconnor](https://twitter.com/btoconnor))
+This is project is maintained and developed by [@mikeycgto](https://twitter.com/mikeycgto) 
+and [@btoconnor](https://twitter.com/btoconnor) mainly for use on [BreakBase](http://breakbase.com).
+
+## License
+
+Copyright (c) 2012 Michael J Coyne
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this 
+software and associated documentation files (the "Software"), to deal in the Software
+without restriction, including without limitation the rights to use, copy, modify,
+merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be included in all copies
+or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
