@@ -115,12 +115,16 @@ a { text-decoration:none; font-family:$fontFamily; color:inherit; }
         input { width:200px; }
     }
 
-    ul {
-        list-style:circle;
-        padding-left:30px;
+    .root {
+        ul, h3 { width:500px; float:left; }
 
-        li {
+        ul {
+            list-style:circle;
+            padding-left:30px;
 
+            li {
+                
+            }
         }
     }
 }
