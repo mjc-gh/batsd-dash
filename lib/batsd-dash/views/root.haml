@@ -1,3 +1,5 @@
+#root
+
 :javascript
   (function(){
     function graph_href(type, metric){
@@ -8,11 +10,11 @@
     }
 
     var types = {};
-    var content = d3.select('#content')
+    var root = d3.select('#root');
 
     d3.json('/available', function(stats){
       if (!stats.length || stats.error)
-        return content.append('strong').text(stats.error || 'No Statistics Available');
+        return root.append('strong').text(stats.error || 'No Statistics Available');
 
       for (var i = 0, stat; stat = stats[i]; i++){
         var split = stat.split(':', 2);
@@ -22,10 +24,10 @@
       }
 
       for (var type in types){
-        content.append('h3').text(type);
+        root.append('h3').text(type);
 
         var metrics = types[type].sort();
-        var list = content.append('ul');
+        var list = root.append('ul');
 
         for (var i = 0, m; m = metrics[i]; i++)
           list.append('li').append('a').text(m).attr('href', graph_href(type, m));
