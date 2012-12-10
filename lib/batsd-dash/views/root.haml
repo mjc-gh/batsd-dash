@@ -11,7 +11,6 @@
     var content = d3.select('#content');
 
     d3.json('/available', function(stats){
-      stats = ['counters:requests', 'timers:requests']
       if (!stats.length || stats.error)
         return content.append('strong').text(stats.error || 'No Statistics Available');
 
