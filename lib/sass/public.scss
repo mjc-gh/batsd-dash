@@ -115,16 +115,21 @@ a { text-decoration:none; font-family:$fontFamily; color:inherit; }
         input { width:200px; }
     }
 
-    #root {
-        ul, h3 { width:500px; float:left; }
+    .list-container {
+        width:500px;
+        float:left;
+
+        h3 {
+            @include box-sizing(border-box);
+
+            margin:20px 15px;
+            text-align:center;
+            border-bottom:1px dashed $green;
+        }
 
         ul {
             list-style:circle;
             padding-left:30px;
-
-            li {
-
-            }
         }
     }
 }
