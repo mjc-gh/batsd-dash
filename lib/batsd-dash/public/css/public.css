@@ -208,12 +208,12 @@ a {
   width: 200px;
 }
 /* line 119, ../../../sass/public.scss */
-#content .root ul, #content .root h3 {
+#content #root ul, #content #root h3 {
   width: 500px;
   float: left;
 }
 /* line 121, ../../../sass/public.scss */
-#content .root ul {
+#content #root ul {
   list-style: circle;
   padding-left: 30px;
 }

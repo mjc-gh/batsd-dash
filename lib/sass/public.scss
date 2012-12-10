@@ -115,7 +115,7 @@ a { text-decoration:none; font-family:$fontFamily; color:inherit; }
         input { width:200px; }
     }
 
-    .root {
+    #root {
         ul, h3 { width:500px; float:left; }
 
         ul {
@@ -123,7 +123,7 @@ a { text-decoration:none; font-family:$fontFamily; color:inherit; }
             padding-left:30px;
 
             li {
-                
+
             }
         }
     }
