@@ -7,3 +7,6 @@ group :test do
   gem "guard-minitest"
 end
 
+group :development do
+  gem "compass"
+end

@@ -27,4 +27,4 @@ class MiniTest::Spec
   end
 end
 
-require 'mocha'
+require 'mocha/setup'
