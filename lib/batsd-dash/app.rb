@@ -5,12 +5,13 @@ require 'json'
 module Batsd::Dash
   class App < Sinatra::Base
     configure(:development) { disable :show_exceptions }
+
     configure do
       helpers ParamsHelper, GraphHelper
       set :haml, format: :html5
       set :raise_errors, false
 
-      config = Batsd::Dash::config || {}
+      config = Batsd::Dash::config.dup || {}
 
       set :views, [views, config.delete(:view_path)].compact
       set :host, config.delete(:host) || 'localhost'
@@ -27,7 +28,7 @@ module Batsd::Dash
       def find_template(views, name, engine, &block)
         path = settings.view_names.include?(name) ? views.first : views.last
 
-        super(path, name, engine, &block)
+        super path, name, engine, &block
       end
 
       def render_error(msg)
@@ -39,7 +40,7 @@ module Batsd::Dash
       end
 
       def connection_pool
-        self.class.instance_variable_get :@connection_pool
+        @connection_pool ||= self.class.instance_variable_get(:@connection_pool)
       end
     end
 
