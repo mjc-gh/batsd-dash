@@ -10,7 +10,7 @@ module Batsd::Dash
     # @param [Hash] opts optional options hash
     # @return [Array] modified values array
     def values_for_graph(values, opts = {})
-        return values if values.empty?
+      return values if values.empty?
 
       values.tap do |pts|
         step = opts[:interval] * 1000
