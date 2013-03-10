@@ -95,7 +95,7 @@ module Batsd::Dash
             next unless json
 
             options[:interval] ||= json['interval']
-            options[:zero_fill] = !statistic.start_with?('gauges') && params[!:no_zero_fill]
+            options[:zero_fill] = statistic !~ /^gauges/i && !params[:no_zero_fill]
 
             points = json[statistic] || []
             values = values_for_graph(points, options)
